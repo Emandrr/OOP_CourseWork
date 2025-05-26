@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MedicineManage.UI.Pages.PatientFullInfoPage"
+             xmlns:models="clr-namespace:MedicineManage.UI.ViewModels"
+             x:DataType="models:PatientFullInfoViewModel"
+             Title="Полная информация о пациенте">
+
+    <ScrollView Padding="15">
+        <Frame CornerRadius="10"
+               BackgroundColor="#F0F8FF"
+               BorderColor="#4C7EE9"
+               Padding="15">
+            <StackLayout Spacing="10">
+                <Label Text="{Binding Patient.Name}" 
+                       FontSize="24"
+                       FontAttributes="Bold"
+                       TextColor="#2D3748"
+                       HorizontalOptions="Center"/>
+
+                <BoxView HeightRequest="1" 
+                         BackgroundColor="#4C7EE9"
+                         Margin="0,5,0,10"/>
+
+                <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+                    <Label Grid.Row="0" Grid.Column="0"
+                           Text="Дата рождения : "
+                           FontAttributes="Bold"/>
+                    <Label Grid.Row="0" Grid.Column="1"
+                           Text="{Binding Patient.BirthDate, StringFormat='{0:dd.MM.yyyy}'}"/>
+
+                    <Label Grid.Row="1" Grid.Column="0"
+                           Text="Пол:"
+                           FontAttributes="Bold"/>
+                    <Label Grid.Row="1" Grid.Column="1"
+                           Text="{Binding Patient.Gender}"/>
+
+                    <Label Grid.Row="2" Grid.Column="0"
+                           Text="Телефон : "
+                           FontAttributes="Bold"/>
+                    <Label Grid.Row="2" Grid.Column="1"
+                           Text="{Binding Patient.PhoneNumber}"/>
+
+                    <Label Grid.Row="3" Grid.Column="0"
+                           Text="Адрес : "
+                           FontAttributes="Bold"/>
+                    <Label Grid.Row="3" Grid.Column="1"
+                           Text="{Binding Patient.Address}"/>
+
+                    <Label Grid.Row="4" Grid.Column="0"
+                           Text="Дополнительно : "
+                           FontAttributes="Bold"/>
+                    <Label Grid.Row="4" Grid.Column="1"
+                           Text="{Binding Patient.AdditionalInfo}"/>
+                </Grid>
+            </StackLayout>
+        </Frame>
+    </ScrollView>
+</ContentPage>

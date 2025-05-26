@@ -5,30 +5,20 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace MedicineManage.BL
+namespace MedicineManage.Aplication.Clients
 {
     public class GeminiClient
     {
         private readonly string _apiKey;
         private readonly string _modelName;
-        private readonly HttpClient _httpClient;
-
-        
+        private readonly HttpClient _httpClient;    
         private const string BaseUrl = "https://generativelanguage.googleapis.com/v1beta/models/";
-
-        /// <summary>
-        /// Инициализирует новый экземпляр класса GeminiClient.
-        /// </summary>
-        /// <param name="apiKey">API ключ для доступа к Gemini API.</param>
-        /// <param name="modelName">Название модели (по умолчанию "gemini-pro").</param>
         public GeminiClient(string apiKey, string modelName = "gemini-1.5-flash")
         {
             _apiKey = apiKey ?? throw new ArgumentNullException(nameof(apiKey));
             _modelName = modelName ?? throw new ArgumentNullException(nameof(modelName));
             _httpClient = new HttpClient();
         }
-
-        /// <summary>
 
         public async Task<string> GetResponseAsync(string prompt)
         {
@@ -66,8 +56,6 @@ namespace MedicineManage.BL
 
                 var responseJson = await response.Content.ReadAsStringAsync();
                 var responseObject = JsonDocument.Parse(responseJson);
-
-                // Извлекаем текст ответа из JSON структуры
                 var textResponse = responseObject.RootElement
                     .GetProperty("candidates")[0]
                     .GetProperty("content")
