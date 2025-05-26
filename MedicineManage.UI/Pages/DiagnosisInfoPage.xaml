@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MedicineManage.UI.Pages.DiagnosisInfoPage"
+             xmlns:models="clr-namespace:MedicineManage.UI.ViewModels"
+             x:DataType="models:DiagnosisInfoViewModel"
+             xmlns:entities="clr-namespace:MedicineManage.Domain.Models;assembly=MedicineManage.Domain"
+             Title="Информация о диагнозе"
+             BackgroundColor="#F0F8FF">
+
+    <Grid RowDefinitions="Auto,*,Auto" 
+          ColumnDefinitions="*"
+          Padding="0">
+
+       
+
+       
+        <ScrollView Grid.Row="1" Padding="20">
+            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto"
+                  ColumnDefinitions="*,*"
+                  RowSpacing="15"
+                  ColumnSpacing="15">
+
+                <Label Grid.Row="0" Grid.Column="0"
+                       Text="Имя диагноза:"
+                       FontAttributes="Bold"/>
+                <Entry Grid.Row="0" Grid.Column="1"
+                       Text="{Binding Diagnosis.Name}"
+                       />
+                
+                <Label Grid.Row="1" Grid.Column="0"
+                       Text="Код диагноза:"
+                       FontAttributes="Bold"/>
+                <Entry Grid.Row="1" Grid.Column="1"
+                       Text="{Binding Diagnosis.Code}"
+                       Placeholder="Введите код"/>
+
+                <Label Grid.Row="2" Grid.Column="0"
+                       Text="Описание:"
+                       FontAttributes="Bold"/>
+                <Editor Grid.Row="2" Grid.Column="1"
+                       Text="{Binding Diagnosis.Description}"
+                       HeightRequest="100"
+                       Placeholder="Подробное описание диагноза"/>
+
+                <Label Grid.Row="3" Grid.Column="0"
+                       Text="Дата создания:"
+                       FontAttributes="Bold"/>
+                <DatePicker Grid.Row="3" Grid.Column="1"
+                           Date="{Binding Diagnosis.DiagnosisDateCreation}"/>
+
+                <Label Grid.Row="4" Grid.Column="0"
+                       Text="Дата обновления:"
+                       FontAttributes="Bold"/>
+                <DatePicker Grid.Row="4" Grid.Column="1"
+                           Date="{Binding Diagnosis.DiagnosisDateLastUpdate}"
+                           IsVisible="{Binding Diagnosis.DiagnosisDateLastUpdate, Converter={StaticResource NullToBoolConverter}}"/>
+
+               
+                <Label Grid.Row="5" Grid.Column="0"
+                       Text="Мед. учреждение:"
+                       FontAttributes="Bold"/>
+                <Entry Grid.Row="5" Grid.Column="1"
+                       Text="{Binding Diagnosis.MedicalAddress}"
+                       Placeholder="Адрес клиники"/>
+
+                
+                <Label Grid.Row="6" Grid.Column="0"
+                       Text="Заметки:"
+                       FontAttributes="Bold"/>
+                <Editor Grid.Row="6" Grid.Column="1"
+                       Text="{Binding Diagnosis.Notes}"
+                       HeightRequest="100"
+                       Placeholder="Дополнительные заметки"/>
+            </Grid>
+        </ScrollView>
+
+       
+        <StackLayout Grid.Row="2"
+                     Orientation="Horizontal"
+                     HorizontalOptions="End"
+                     VerticalOptions="End"
+                     Spacing="15"
+                     Margin="0,0,20,20">
+
+          
+            <Button Text="Анализ"
+                    BackgroundColor="#FFA500"
+                    TextColor="White"
+                    WidthRequest="100"
+                    HeightRequest="50"
+                    Command="{Binding AnalyzeCommand}"
+                    Padding="0">
+            </Button>
+
+         
+            <Button Text="Сохранить"
+                    BackgroundColor="Transparent"
+                    TextColor="#4C7EE9"
+                    BorderColor="#4C7EE9"
+                    BorderWidth="1"
+                    WidthRequest="100"
+                    HeightRequest="50"
+                    Command="{Binding SaveDiagnosisCommand}"
+                    Padding="0">
+            </Button>
+        </StackLayout>
+    </Grid>
+</ContentPage>

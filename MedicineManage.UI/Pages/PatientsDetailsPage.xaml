@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MedicineManage.UI.Pages.PatientsDetailsPage"
+             xmlns:models="clr-namespace:MedicineManage.UI.ViewModels"
+             x:DataType="models:PatientsDetailsViewModel"
+             xmlns:entities="clr-namespace:MedicineManage.Domain.Models;assembly=MedicineManage.Domain"
+             BackgroundColor="#F5F5F9">
+
+    <ScrollView>
+        <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="15" RowSpacing="15">
+            
+            <Frame Grid.Row="0" 
+                   Padding="15"
+                   BackgroundColor="#F0F8FF"
+                   BorderColor="#4C7EE9">
+                <Grid>
+                   
+                    <StackLayout Spacing="8">
+                        <Label Text="{Binding Patient.Name}" 
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="#2D3748"/>
+
+                        <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto">
+                            <Label Grid.Row="0" Grid.Column="0"
+                                   Text="Дата рождения : "
+                                   FontAttributes="Bold"/>
+                            <Label Grid.Row="0" Grid.Column="1"
+                                   Text="{Binding Patient.BirthDate, StringFormat='{0:dd.MM.yyyy}'}"/>
+
+                            <Label Grid.Row="1" Grid.Column="0"
+                                   Text="Пол:"
+                                   FontAttributes="Bold"/>
+                            <Label Grid.Row="1" Grid.Column="1"
+                                   Text="{Binding Patient.Gender}"/>
+
+                            <Label Grid.Row="2" Grid.Column="0"
+                                   Text="Телефон:"
+                                   FontAttributes="Bold"/>
+                            <Label Grid.Row="2" Grid.Column="1"
+                                   Text="{Binding Patient.PhoneNumber}"/>
+
+                            <Label Grid.Row="3" Grid.Column="0"
+                                   Text="Адрес:"
+                                   FontAttributes="Bold"/>
+                            <Label Grid.Row="3" Grid.Column="1"
+                                   Text="{Binding Patient.Address}"/>
+                        </Grid>
+                    </StackLayout>
+
+                    
+                    <StackLayout HorizontalOptions="End"
+                                 VerticalOptions="End"
+                                 Orientation="Horizontal"
+                                 Spacing="10"
+                                 Margin="0,0,0,0">
+                        <Button Grid.Row="0" Grid.Column="0"
+                                Text="Полная информация"
+                                HorizontalOptions="End"
+                                BackgroundColor="Transparent"
+                                TextColor="#4C7EE9"
+                                BorderColor="#4C7EE9"
+                                BorderWidth="1"
+                                FontSize="16"
+                                WidthRequest="300"
+                                HeightRequest="40"
+                                Command="{Binding NavigateToFullInfoCommand}"/>
+                        <Button Text="Редактировать данные пациента" 
+                                BackgroundColor="Transparent"
+                                TextColor="#4C7EE9"
+                                BorderColor="#4C7EE9"
+                                BorderWidth="1"
+                                FontSize="16"
+                                WidthRequest="300"
+                                HeightRequest="40"
+                                Command="{Binding EditPatientCommand}"/>
+
+                        <Button Text="Удалить пациента" 
+                                BackgroundColor="Transparent"
+                                TextColor="#E74C3C"
+                                BorderColor="#E74C3C"
+                                BorderWidth="1"
+                                FontSize="16"
+                                WidthRequest="250"
+                                HeightRequest="40"
+                                Command="{Binding DeletePatientCommand}"/>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+
+           
+            <Label Grid.Row="1"
+                   Text="Диагнозы:"
+                   FontSize="18"
+                   FontAttributes="Bold"/>
+
+            <CollectionView Grid.Row="2"
+                          ItemsSource="{Binding Diagnoses}"
+                          SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <Label Text="Нет данных о диагнозах"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Margin="0,20"/>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="entities:Diagnosis">
+                        <Frame Padding="15"
+                           Margin="0,0,0,10"
+                           CornerRadius="8"
+                           BackgroundColor="White"
+                           BorderColor="#DDD"
+                           HasShadow="True">
+                            <StackLayout>
+                                <Grid ColumnDefinitions="*,Auto">
+                                    <Label Text="{Binding Name}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="#2D3748"/>
+
+                                    <Button Grid.Column="1"
+                                        Text="Детализация"
+                                        BackgroundColor="Transparent"
+                                        TextColor="#4C7EE9"
+                                        BorderColor="#4C7EE9"
+                                        BorderWidth="1"
+                                        FontSize="14"
+                                        WidthRequest="120"
+                                        HeightRequest="30"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type models:PatientsDetailsViewModel}}, Path=ShowDiagnosisDetailsCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </Grid>
+
+                                <Label Text="{Binding Description}"
+                                   FontSize="14"
+                                   TextColor="#4C7EE9"
+                                   Margin="0,5,0,0"/>
+
+                                <Label Text="{Binding DiagnosisDateCreation, StringFormat='Дата: {0:dd.MM.yyyy}'}"
+                                   FontSize="14"
+                                   TextColor="#718096"
+                                   Margin="0,5,0,0"/>
+                            </StackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Button Grid.Row="3"
+                Text="Добавить диагноз"
+                WidthRequest="300"
+                HeightRequest="56"
+                FontSize="24"
+                BackgroundColor="Transparent"
+                TextColor="#4C7EE9"
+                BorderColor="#4C7EE9"
+                BorderWidth="1"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="0,0,0,20"
+                Command="{Binding AddDiagnosisCommand}"/>
+        </Grid>
+    </ScrollView>
+</ContentPage>

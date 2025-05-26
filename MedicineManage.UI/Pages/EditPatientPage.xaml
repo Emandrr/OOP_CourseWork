@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MedicineManage.UI.Pages.EditPatientPage"
+             xmlns:models="clr-namespace:MedicineManage.UI.ViewModels"
+             x:DataType="models:EditPatientViewModel"
+             xmlns:entities="clr-namespace:MedicineManage.Domain.Models;assembly=MedicineManage.Domain"
+             Title="Редактирование пациента">
+
+    <ScrollView>
+        <StackLayout Padding="20" Spacing="15">
+            <Frame CornerRadius="10" Padding="15" BackgroundColor="#F0F8FF">
+                <StackLayout Spacing="10">
+                    <Entry Text="{Binding Patient.Name}" 
+                           Placeholder="ФИО пациента"
+                           FontSize="16"/>
+
+                    <DatePicker Date="{Binding Patient.BirthDate}"
+                                Format="dd.MM.yyyy"/>
+
+                    <Picker Title="Выберите пол" SelectedItem="{Binding Patient.Gender}">
+                        <Picker.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>Мужской</x:String>
+                                <x:String>Женский</x:String>
+                            </x:Array>
+                        </Picker.ItemsSource>
+                    </Picker>
+
+                    <Entry Text="{Binding Patient.PhoneNumber}" 
+                           Placeholder="Телефон"
+                           Keyboard="Telephone"/>
+
+                    <Entry Text="{Binding Patient.Address}" 
+                           Placeholder="Адрес"/>
+
+                    <Editor Text="{Binding Patient.AdditionalInfo}" 
+                            Placeholder="Дополнительная информация"
+                            HeightRequest="100"/>
+                </StackLayout>
+            </Frame>
+
+            <Button Text="Сохранить"
+                    Command="{Binding SavePatientCommand}"
+                    BackgroundColor="Transparent"
+                    TextColor="#4C7EE9"
+                    BorderColor="#4C7EE9"
+                    BorderWidth="1"
+                    CornerRadius="10"
+                    HeightRequest="50"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

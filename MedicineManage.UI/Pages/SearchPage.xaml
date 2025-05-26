@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MedicineManage.UI.Pages.SearchPage"
+             xmlns:models="clr-namespace:MedicineManage.UI.ViewModels"
+             x:DataType="models:SearchViewModel"
+             xmlns:entities="clr-namespace:MedicineManage.Domain.Models;assembly=MedicineManage.Domain"
+             BackgroundColor="#F5F5F9">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Margin="16">
+        <Label Grid.Row="0" 
+               Text="Поиск пациентов" 
+               FontSize="24"
+               FontAttributes="Bold"
+               TextColor="#2D3748"
+               Margin="0,0,0,16"/>
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto" ColumnSpacing="10">
+            <SearchBar Grid.Column="0" 
+                     Placeholder="Введите ФИО"
+                     Text="{Binding SearchText}"
+                     SearchCommand="{Binding SearchCommand}"
+                     BackgroundColor="White"
+                     CancelButtonColor="#4C7EE9"
+                     TextColor="#2D3748"/>
+        </Grid>
+
+        <RefreshView Grid.Row="2" 
+                    Command="{Binding SearchCommand}"
+                    IsRefreshing="{Binding IsBusy}">
+            <CollectionView ItemsSource="{Binding Patients}"
+                          SelectionMode="None">
+                <CollectionView.EmptyView>
+                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                        <Image Source="search.png" 
+                               HeightRequest="80"
+                               Aspect="AspectFit"/>
+                        <Label Text="Введите корректное ФИО для поиска пациента" 
+                               TextColor="#718096"
+                               HorizontalOptions="Center"/>
+                    </StackLayout>
+                </CollectionView.EmptyView>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="entities:Patient">
+                        <Frame Padding="16" 
+                               Margin="0,0,0,12"
+                               CornerRadius="12"
+                               BackgroundColor="White"
+                               HasShadow="True">
+                            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto,Auto,Auto">
+
+                                <Label Grid.Column="1" 
+                                       Text="{Binding Name}" 
+                                       FontSize="18" 
+                                       FontAttributes="Bold"
+                                       TextColor="#2D3748"/>
+
+                                <Label Grid.Column="1" Grid.Row="1"
+                                       Text="{Binding BirthDate, StringFormat='Дата рождения: {0:dd.MM.yyyy}'}"
+                                       TextColor="#718096"
+                                       Margin="0,4,0,0"/>
+
+                                <Label Grid.Column="1" Grid.Row="2"
+                                       Text="{Binding Address, StringFormat='Адрес: {0}'}"
+                                       TextColor="#718096"
+                                       Margin="0,4,0,0"/>
+
+                                <Button Grid.Column="1" Grid.Row="2"
+                                Text="Подробнее"
+                                BackgroundColor="Transparent"
+                                TextColor="#4C7EE9"
+                                HorizontalOptions="End"
+                                VerticalOptions="Center"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type models:SearchViewModel}},
+                                Path=ShowPatientDetailsCommand}" 
+                                CommandParameter="{Binding}"/>
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <Grid Grid.Row="3">
+            <Button Text="Добавить пациента"
+                    WidthRequest="300"
+                    HeightRequest="56"
+                    FontSize="24"
+                    BackgroundColor="Transparent"
+                    TextColor="#4C7EE9"
+                    BorderColor="#4C7EE9"
+                    BorderWidth="1"
+                    HorizontalOptions="End"
+                    VerticalOptions="End"
+                    Margin="0,0,0,20"
+                    Command="{Binding AddPatientCommand}"/>
+        </Grid>
+    </Grid>
+</ContentPage>
